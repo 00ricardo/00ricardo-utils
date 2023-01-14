@@ -16,10 +16,7 @@ It has several utility fuctions for:
 ```sh
 npm i 00ricardo-utils --save-dev 
 ```
-## Plugins
-
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
+## Available functions
 
 | Functions | Description | Parameters | Return |
 | ------ | ------ | ------ | ------ |
