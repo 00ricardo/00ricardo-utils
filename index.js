@@ -1,8 +1,7 @@
 // * Developer @00ricardo
 // ? Created 14/01/23
 // ! Portugal 
-
-export default rutils = '00ricardo'
+const rutils = '00ricardo'
 
 // * Method 
 // ! Returns Boolean
@@ -85,3 +84,5 @@ export const readFileInfo = file => {
 export const removeEmptyElements = arr => {
     return arr.filter(Boolean);
 }
+
+export default rutils
