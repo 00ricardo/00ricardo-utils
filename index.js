@@ -52,7 +52,7 @@ export const removeProperty = (obj, key) => {
 // ! Returns Boolean
 // ? Function that checks if an object has a specific property
 export const hasProperty = (obj, property) => {
-    obj.hasOwnProperty(property)
+    return obj.hasOwnProperty(property)
 };
 
 
@@ -84,5 +84,32 @@ export const readFileInfo = file => {
 export const removeEmptyElements = arr => {
     return arr.filter(Boolean);
 }
+
+
+// * Method 
+// ! Returns Array
+// ? Function that join 2 arrays through property mapping
+// ? It receives 2 arrays and 3 property references
+
+// ! arr1 -> Main Array (Array)
+// ! arr2 -> Auxiliar Array (Array)
+// ! arr1Prop -> represents the property of the arr1 array that we want to use for mapping (String)
+// ! arr2Prop -> represents the property of the arr2 array that we want to use for mapping (String)
+// ! returnedProp -> represents the property of the arr2 array that we want to return in the result (String)
+
+// * It's important to understand how this function works.
+// ? The functional logic it's very similar to LEFT JOIN in SQL.
+
+// ? SELECT arr1.id, arr1.name, arr1.arr1Prop, arr2.returnedProp 
+// ? FROM arr1 
+// ? JOIN LEFT arr2 ON arr1.arr1Prop = arr2.arr2Prop
+
+export const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
+    return arr1.map(p => {
+        const map = arr2.find(_p => _p[arr2Prop] === p[arr1Prop]);
+        return { ...p, [returnedProp]: map[returnedProp] };
+    });
+}
+
 
 export default rutils
