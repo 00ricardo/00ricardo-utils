@@ -1,0 +1,24 @@
+{
+  "name": "00ricardo-utils",
+  "version": "1.0.3",
+  "description": "Ricardo Briceño personal JavaScript Util Functions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/00ricardo/00ricardo-utils.git"
+  },
+  "keywords": [
+    "ES6",
+    "JavaScript",
+    "Utils"
+  ],
+  "author": "Ricardo Briceño",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/00ricardo/00ricardo-utils/issues"
+  },
+  "homepage": "https://github.com/00ricardo/00ricardo-utils#readme"
+}
