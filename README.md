@@ -26,7 +26,7 @@ npm i 00ricardo-utils --save-dev
 | hasProperty | Function that checks if an object has a specific property. | Object, Property (String) | Boolean |
 | readFileInfo | Function that reads a file and give useful information like the name, type, size and Base64 Encode. | File | Object |
 | removeEmptyElements | Function that cleans an array. It removes all NULL, undefined and empty strings from the array. | Array | Array |
-
+| joinMapping | Function that join 2 arrays through property mapping. It receives 2 arrays and 3 property references | Array, String, Array,String, String | Array |
 ## Development
 
 Looking forward to optimize solutions and add new utility functions.

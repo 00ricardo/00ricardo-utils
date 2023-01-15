@@ -1,14 +1,9 @@
-// * Developer @00ricardo
-// ? Created 14/01/23
-// ! Portugal 
-const rutils = '00ricardo'
-
 // * Method 
 // ! Returns Boolean
 // ? Function that receives a value and checks its 
 // ? type, and returns a boolean indicating whether 
 // ? it has a value.
-export const hasValue = (parameter) => {
+const hasValue = (parameter) => {
     if (parameter === undefined || parameter === null) {
         return false;
     } else if (typeof parameter === 'object') {
@@ -26,7 +21,7 @@ export const hasValue = (parameter) => {
 // ! Returns Array
 // ? Function that receives an array and removes an specific 
 // ? element by its index and return a new array
-export const removeElement = (arr, index) => {
+const removeElement = (arr, index) => {
     arr.splice(index, 1);
     return arr;
 }
@@ -35,7 +30,7 @@ export const removeElement = (arr, index) => {
 // ! Returns Object
 // ? Function that receives an object and removes an specific 
 // ? property by its name and return a new Object
-export const removeProperty = (obj, key) => {
+const removeProperty = (obj, key) => {
     if (obj.hasOwnProperty(key)) {
         Object.defineProperty(obj, key, {
             configurable: true,
@@ -51,7 +46,7 @@ export const removeProperty = (obj, key) => {
 // * Method 
 // ! Returns Boolean
 // ? Function that checks if an object has a specific property
-export const hasProperty = (obj, property) => {
+const hasProperty = (obj, property) => {
     return obj.hasOwnProperty(property)
 };
 
@@ -60,7 +55,7 @@ export const hasProperty = (obj, property) => {
 // ! Returns Object
 // ? Function that reads a file and give useful information 
 // ? like the name, type, size and Base64 Encode
-export const readFileInfo = file => {
+const readFileInfo = file => {
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
         reader.onload = () => {
@@ -81,7 +76,7 @@ export const readFileInfo = file => {
 // ! Returns Array
 // ? Function that cleans an array. It removes all NULL,
 // ? undefined and empty strings from the array
-export const removeEmptyElements = arr => {
+const removeEmptyElements = arr => {
     return arr.filter(Boolean);
 }
 
@@ -104,7 +99,7 @@ export const removeEmptyElements = arr => {
 // ? FROM arr1 
 // ? JOIN LEFT arr2 ON arr1.arr1Prop = arr2.arr2Prop
 
-export const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
+const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
     return arr1.map(p => {
         const map = arr2.find(_p => _p[arr2Prop] === p[arr1Prop]);
         return { ...p, [returnedProp]: map[returnedProp] };
@@ -112,4 +107,15 @@ export const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
 }
 
 
-export default rutils
+// * Developer @00ricardo
+// ? Created 14/01/23
+// ! Portugal 
+export default {
+    hasValue,
+    removeElement,
+    removeProperty,
+    hasProperty,
+    readFileInfo,
+    removeEmptyElements,
+    joinMapping
+};
