@@ -111,11 +111,12 @@ const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
 // ? Created 14/01/23
 // ! Portugal 
 export default {
-    hasValue,
-    removeElement,
-    removeProperty,
-    hasProperty,
-    readFileInfo,
-    removeEmptyElements,
-    joinMapping
+
+    hasValue : hasValue,
+    removeElement : removeElement,
+    removeProperty : removeProperty,
+    hasProperty : hasProperty,
+    readFileInfo : readFileInfo,
+    removeEmptyElements : removeEmptyElements,
+    joinMapping : joinMapping
 };
