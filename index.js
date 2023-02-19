@@ -124,7 +124,7 @@ const getWords = (str) => {
         words[i] = words[i].replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '');
     }
 
-    return words;
+    return removeEmptyElements(words);
 }
 
 
@@ -134,6 +134,7 @@ const getWords = (str) => {
 // ! For Simple Arrays (Strings, Numbers) no filter should be used.
 const searchFiltering = (array, query, filters) => {
     const words = getWords(query)
+
     var result = [];
 
     if (hasValue(filters)) {
