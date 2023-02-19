@@ -1,6 +1,6 @@
 {
   "name": "00ricardo-utils",
-  "version": "1.0.13",
+  "version": "1.2.0",
   "description": "Ricardo Briceño personal JavaScript Util Functions.",
   "main": "index.js",
   "scripts": {

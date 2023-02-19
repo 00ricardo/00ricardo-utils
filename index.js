@@ -80,6 +80,13 @@ const removeEmptyElements = arr => {
     return arr.filter(Boolean);
 }
 
+// * Method 
+// ! Returns Array
+// ? Function that returns unique values from array
+const getUniqueValues = (arr) => {
+    return [...new Set(arr)]
+};
+
 
 // * Method 
 // ! Returns Array
@@ -168,5 +175,6 @@ export default {
     removeEmptyElements: removeEmptyElements,
     joinMapping: joinMapping,
     getWords: getWords,
-    searchFiltering: searchFiltering
+    searchFiltering: searchFiltering,
+    getUniqueValues: getUniqueValues
 };
