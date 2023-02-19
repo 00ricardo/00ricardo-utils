@@ -30,15 +30,15 @@ const removeElement = (arr, index) => {
 // ! Returns Object
 // ? Function that receives an object and removes an specific 
 // ? property by its name and return a new Object
-const removeProperty = (obj, key) => {
-    if (obj.hasOwnProperty(key)) {
-        Object.defineProperty(obj, key, {
+const removeProperty = (obj, property) => {
+    if (obj.hasOwnProperty(property)) {
+        Object.defineProperty(obj, property, {
             configurable: true,
             enumerable: true,
             writable: true,
             value: undefined
         });
-        delete obj[key];
+        delete obj[property];
     }
     return obj;
 }
@@ -107,16 +107,66 @@ const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
 }
 
 
+// * Method 
+// ! Returns Array
+// ? Function that returns all words from a String.
+const getWords = (str) => {
+    const words = str.split(/\s+/);
+
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '');
+    }
+
+    return words;
+}
+
+
+// * Method 
+// ! Returns Array
+// ? Function that returns all instances from an Array based on filtering properties
+// ! For Simple Arrays (Strings, Numbers) no filter should be used.
+const searchFiltering = (array, query, filters) => {
+    const words = getWords(query)
+    var result = [];
+
+    if (hasValue(filters)) {
+        filters.forEach(propFilter => {
+            words.forEach(w => {
+                try {
+                    result = [...result, ...array.filter(e => (e[propFilter].toLowerCase()).includes(w.toLowerCase()))]
+                } catch (error) {
+                    console.warn("[00ricardo-utils] - This operation is not possible. Probably you're filtering based on a wrong Filter.")
+                    console.warn("[00ricardo-utils] - Please check the right properties.")
+                }
+            });
+        });
+    }
+    else {
+        try {
+            words.forEach(w => {
+                result = [...result, ...array.filter(e => (e.toLowerCase()).includes(w.toLowerCase()))]
+            });
+        } catch (error) {
+            console.warn("[00ricardo-utils] - This operation is not possible. Probably you're filtering an array of Objects and you must specify the filtering property.")
+            console.warn("[00ricardo-utils] - Example: Title")
+        }
+    }
+    return result;
+};
+
+
 // * Developer @00ricardo
 // ? Created 14/01/23
 // ! Portugal 
 export default {
 
-    hasValue : hasValue,
-    removeElement : removeElement,
-    removeProperty : removeProperty,
-    hasProperty : hasProperty,
-    readFileInfo : readFileInfo,
-    removeEmptyElements : removeEmptyElements,
-    joinMapping : joinMapping
+    hasValue: hasValue,
+    removeElement: removeElement,
+    removeProperty: removeProperty,
+    hasProperty: hasProperty,
+    readFileInfo: readFileInfo,
+    removeEmptyElements: removeEmptyElements,
+    joinMapping: joinMapping,
+    getWords: getWords,
+    searchFiltering: searchFiltering
 };
