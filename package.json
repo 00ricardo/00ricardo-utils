@@ -1,10 +1,11 @@
 {
   "name": "00ricardo-utils",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "description": "Ricardo Briceño personal JavaScript Util Functions.",
-  "main": "index.js",
+  "main": "dist/00ricardo-utils.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/00ricardo/00ricardo-utils/issues"
   },
-  "homepage": "https://github.com/00ricardo/00ricardo-utils#readme"
+  "homepage": "https://github.com/00ricardo/00ricardo-utils#readme",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
 }
