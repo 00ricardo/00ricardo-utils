@@ -11,7 +11,7 @@ It has several utility fuctions for:
 
 ## Installation
 
-00ricardo-utils doesn't requires any specific version of [Node.js] to run because it hasn't dependency modules.
+00ricardo-utils doesn't requires any specific version of  [NodeJS]: <http://nodejs.org> to run because it hasn't dependency modules.
 
 ```sh
 npm i 00ricardo-utils --save-dev 
@@ -27,6 +27,9 @@ npm i 00ricardo-utils --save-dev
 | readFileInfo | Function that reads a file and give useful information like the name, type, size and Base64 Encode. | File | Object |
 | removeEmptyElements | Function that cleans an array. It removes all NULL, undefined and empty strings from the array. | Array | Array |
 | joinMapping | Function that join 2 arrays through property mapping. It receives 2 arrays and 3 property references | Array, String, Array,String, String | Array |
+| getUniqueValues | Function that returns unique values from array | Array | Array |
+| searchFiltering | Function that returns all instances from an Array based on filtering properties. | Array, String, Array | Array |
+| getWords | Function that returns all words from a String. | String | Array |
 ## Development
 
 Looking forward to optimize solutions and add new utility functions.

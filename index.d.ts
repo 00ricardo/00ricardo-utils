@@ -9,6 +9,7 @@ declare module '00ricardo-utils' {
         joinMapping(arr1: Array<Object>, arr1Prop: String, arr2: Array<Object>, arr2Prop: String, returnedProp: String): Array<Object>;
         searchFiltering(array: Array<any>, query: String, filters: Array<String>): Array<any>;
         getUniqueValues(array: Array<any>): Array<any>;
+        getWords(phrase: String): Array<String>;
     }
     const utils: Utils;
     export default utils;
