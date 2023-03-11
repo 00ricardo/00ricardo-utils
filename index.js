@@ -97,7 +97,7 @@ const getUniqueValues = (arr) => {
 // ! arr2 -> Auxiliar Array (Array)
 // ! arr1Prop -> represents the property of the arr1 array that we want to use for mapping (String)
 // ! arr2Prop -> represents the property of the arr2 array that we want to use for mapping (String)
-// ! returnedProp -> represents the property of the arr2 array that we want to return in the result (String)
+// ! arr2PropValue -> represents the property of the arr2 array that we want to return in the result (String)
 
 // * It's important to understand how this function works.
 // ? The functional logic it's very similar to LEFT JOIN in SQL.
@@ -106,10 +106,16 @@ const getUniqueValues = (arr) => {
 // ? FROM arr1 
 // ? JOIN LEFT arr2 ON arr1.arr1Prop = arr2.arr2Prop
 
-const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, returnedProp) => {
+const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, arr2PropValue) => {
+    console.log()
     return arr1.map(p => {
         const map = arr2.find(_p => _p[arr2Prop] === p[arr1Prop]);
-        return { ...p, [returnedProp]: map[returnedProp] };
+        return {
+            ...p, [arr2PropValue]: hasValue(map)
+                ? map[arr2PropValue]
+                : undefined,
+            disabled: !hasValue(map)
+        };
     });
 }
 
@@ -162,12 +168,61 @@ const searchFiltering = (array, query, filters) => {
     return result;
 };
 
+// * Method 
+// ! Returns Object
+// ? Function that renames a Object Property
+const renameProperty = (obj, oldProp, newProp) => {
+    const { [oldProp]: _, ...rest } = obj;
+    return {
+        ...rest,
+        [newProp]: obj[oldProp],
+    };
+};
+
+// * Method 
+// ! Returns Object
+// ? Function that groups an array of objects by a property
+const groupBy = (array, groupByProperty) => {
+    array.reduce((result, element) => {
+        const key = element[groupByProperty];
+        if (!result[key]) {
+            result[key] = [];
+        }
+        result[key].push(element);
+        return result;
+    }, {})
+};
+
+// * Method 
+// ! Returns Object
+// ? Function that aggregates an array of objects by a property
+function aggregateData(array, _key, propToAggregate) {
+    return array.reduce((result, item) => {
+        const key = item[_key];
+        const propValue = Number(item[propToAggregate]); // convert to number
+        if (isNaN(propValue)) {
+            return result; // ignore non-number properties
+        }
+        if (!result[key]) {
+            result[key] = 0;
+        }
+        result[key] += propValue;
+        return result;
+    }, {});
+}
+
+// * Method 
+// ! Returns Bollean
+// ? Function that validates an email
+const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+};
 
 // * Developer @00ricardo
 // ? Created 14/01/23
 // ! Portugal 
 export default {
-
     hasValue: hasValue,
     removeElement: removeElement,
     removeProperty: removeProperty,
@@ -177,5 +232,9 @@ export default {
     joinMapping: joinMapping,
     getWords: getWords,
     searchFiltering: searchFiltering,
-    getUniqueValues: getUniqueValues
+    getUniqueValues: getUniqueValues,
+    renameProperty: renameProperty,
+    groupBy: groupBy,
+    aggregateData: aggregateData,
+    validateEmail: validateEmail
 };
