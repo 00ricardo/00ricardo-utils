@@ -30,11 +30,11 @@ npm i 00ricardo-utils --save-dev
 | getUniqueValues | Function that returns unique values from array | Array | Array |
 | searchFiltering | Function that returns all instances from an Array based on filtering properties. | Array, String, Array | Array |
 | getWords | Function that returns all words from a String. | String | Array |
-
 | renameProperty | Function that renames a Object Property | Array, String, String | Object |
 | groupBy | Function that groups an array of objects by a property|  Array, String | Object |
 | aggregateData | Function that aggregates an array of objects by a property | Array, String, String | Object |
 | validateEmail |Function that validates an email | String | String |
+
 ## Development
 
 Looking forward to optimize solutions and add new utility functions.
