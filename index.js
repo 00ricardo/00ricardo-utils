@@ -219,6 +219,28 @@ const validateEmail = (email) => {
     return regex.test(email);
 };
 
+// * Method 
+// ! Returns Object
+// ? Function that calculates the Time Zones (TZ) and their date times
+const convertTimezone = (fromTimeZone, toTimeZone) => {
+    const now = new Date();
+    const fromOffset = -1 * now.getTimezoneOffset() * 60000; // in milliseconds
+    const toOffset = moment.tz.zone(toTimeZone).utcOffset(now) * 60000; // in milliseconds
+    const fromTime = now.getTime() + fromOffset;
+    const toTime = fromTime + toOffset;
+    const fromDateTime = new Date(fromTime).toLocaleString("en-US", { timeZone: fromTimeZone });
+    const toDateTime = new Date(toTime).toLocaleString("en-US", { timeZone: toTimeZone });
+    const hourDifference = Math.abs(moment.tz(fromTimeZone).utcOffset() - moment.tz(toTimeZone).utcOffset()) / 60;
+    const result = {
+        originTZ: fromTimeZone,
+        offsetTZ: toTimeZone,
+        hourDifference: hourDifference,
+        originDateTime: fromDateTime,
+        offsetDateTime: toDateTime
+    }
+    return result
+}
+
 // * Developer @00ricardo
 // ? Created 14/01/23
 // ! Portugal 
@@ -236,5 +258,6 @@ export default {
     renameProperty: renameProperty,
     groupBy: groupBy,
     aggregateData: aggregateData,
-    validateEmail: validateEmail
+    validateEmail: validateEmail,
+    convertTimezone: convertTimezone
 };

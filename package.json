@@ -1,6 +1,6 @@
 {
   "name": "00ricardo-utils",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "Ricardo Briceño personal JavaScript Util Functions.",
   "main": "dist/00ricardo-utils.min.js",
   "scripts": {
@@ -25,5 +25,8 @@
   "devDependencies": {
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "moment-timezone": "^0.5.41"
   }
 }
