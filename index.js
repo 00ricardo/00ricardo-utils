@@ -1,7 +1,3 @@
-// Dependencies
-import * as moment from 'moment-timezone';
-
-
 // * Method 
 // ! Returns Boolean
 // ? Function that receives a value and checks its 
