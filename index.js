@@ -241,7 +241,7 @@ const convertTimezone = (fromTimeZone, toTimeZone) => {
     const hourDifference = Math.abs(moment.tz(fromTimeZone).utcOffset() - moment.tz(toTimeZone).utcOffset()) / 60;
     const fromDateTime = new Date(fromTime).toLocaleString("en-US", { timeZone: fromTimeZone });
     const __ToDateTime__ = new Date(toTime).addHours(hourDifference)
-    const toDateTime = new Date(__ToDateTime__).toLocaleString("en-US", { timeZone: toTimeZone });
+    const toDateTime = new Date(__ToDateTime__);
 
     const result = {
         originTZ: fromTimeZone,
