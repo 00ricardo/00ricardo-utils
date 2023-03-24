@@ -227,14 +227,22 @@ const validateEmail = (email) => {
 // ! Returns Object
 // ? Function that calculates the Time Zones (TZ) and their date times
 const convertTimezone = (fromTimeZone, toTimeZone) => {
+    Date.prototype.addHours = function (h) {
+        this.setHours(this.getHours() + h);
+        return this;
+    }
     const now = new Date();
     const fromOffset = -1 * now.getTimezoneOffset() * 60000; // in milliseconds
     const toOffset = moment.tz.zone(toTimeZone).utcOffset(now) * 60000; // in milliseconds
+
     const fromTime = now.getTime() + fromOffset;
     const toTime = fromTime + toOffset;
-    const fromDateTime = new Date(fromTime).toLocaleString("en-US", { timeZone: fromTimeZone });
-    const toDateTime = new Date(toTime).toLocaleString("en-US", { timeZone: toTimeZone });
+
     const hourDifference = Math.abs(moment.tz(fromTimeZone).utcOffset() - moment.tz(toTimeZone).utcOffset()) / 60;
+    const fromDateTime = new Date(fromTime).toLocaleString("en-US", { timeZone: fromTimeZone });
+    const __ToDateTime__ = new Date(toTime).addHours(hourDifference)
+    const toDateTime = new Date(__ToDateTime__).toLocaleString("en-US", { timeZone: toTimeZone });
+
     const result = {
         originTZ: fromTimeZone,
         offsetTZ: toTimeZone,
