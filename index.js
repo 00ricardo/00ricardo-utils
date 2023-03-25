@@ -222,10 +222,18 @@ const validateEmail = (email) => {
 // * Method 
 // ! Returns Object
 // ? Function that calculates the Time Zones (TZ) and their date times
-const convertTimezone = (fromTimeZone, toTimeZone) => {
-    const fromDateTime = new Date().toLocaleString('en-US', { timeZone: fromTimeZone });
-    const toDateTime = new Date().toLocaleString('en-US', { timeZone: toTimeZone });
-    const hourDifference = Math.round((new Date(fromDateTime) - new Date(toDateTime)) / 36e5)
+const convertTimezone = (fromTimeZone, toTimeZone, customDate = undefined) => {
+    let [fromDateTime, toDateTime] = [undefined, undefined]
+    const fromDateTimeConfiguration = { timeZone: fromTimeZone }
+    const toDateTimeConfiguration = { timeZone: toTimeZone }
+    if (typeof customDate !== 'object') {
+        fromDateTime = new Date().toLocaleString('en-US', fromDateTimeConfiguration);
+        toDateTime = new Date().toLocaleString('en-US', toDateTimeConfiguration);
+    } else {
+        fromDateTime = customDate.toLocaleString('en-US', fromDateTimeConfiguration);
+        toDateTime = customDate.toLocaleString('en-US', toDateTimeConfiguration);
+    }
+    const hourDifference = Math.round((new Date(toDateTime) - new Date(fromDateTime)) / 36e5)
     const result = {
         originTZ: fromTimeZone,
         offsetTZ: toTimeZone,

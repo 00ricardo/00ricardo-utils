@@ -34,7 +34,7 @@ npm i 00ricardo-utils --save-dev
 | groupBy | Function that groups an array of objects by a property|  Array, String | Object |
 | aggregateData | Function that aggregates an array of objects by a property | Array, String, String | Object |
 | validateEmail |Function that validates an email | String | String |
-
+| convertTimezone |Function that converts datetime from a TZ to another. It supports custom datetimes | String,  String, Object (Date) | Object |
 ## Development
 
 Looking forward to optimize solutions and add new utility functions.
