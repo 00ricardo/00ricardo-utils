@@ -1,3 +1,6 @@
+//Dependencies
+import { DateTime } from 'luxon'
+
 // * Method 
 // ! Returns Boolean
 // ? Function that receives a value and checks its 
@@ -222,27 +225,21 @@ const validateEmail = (email) => {
 // * Method 
 // ! Returns Object
 // ? Function that calculates the Time Zones (TZ) and their date times
-const convertTimezone = (fromTimeZone, toTimeZone, customDate = undefined) => {
-    let [fromDateTime, toDateTime] = [undefined, undefined]
-    const fromDateTimeConfiguration = { timeZone: fromTimeZone }
-    const toDateTimeConfiguration = { timeZone: toTimeZone }
-    if (typeof customDate !== 'object') {
-        fromDateTime = new Date().toLocaleString('en-US', fromDateTimeConfiguration);
-        toDateTime = new Date().toLocaleString('en-US', toDateTimeConfiguration);
-    } else {
-        fromDateTime = customDate.toLocaleString('en-US', fromDateTimeConfiguration);
-        toDateTime = customDate.toLocaleString('en-US', toDateTimeConfiguration);
-    }
-    const hourDifference = Math.round((new Date(toDateTime) - new Date(fromDateTime)) / 36e5)
-    const result = {
-        originTZ: fromTimeZone,
-        offsetTZ: toTimeZone,
-        hourDifference: hourDifference,
-        originDateTime: fromDateTime,
-        offsetDateTime: toDateTime
-    }
-    return result
-}
+const convertTimezone = (originTimeZone, offsetTimeZone, dateTime) => {
+    const originDate = DateTime.fromISO(dateTime, { zone: originTimeZone });
+    const offsetDate = originDate.setZone(offsetTimeZone);
+    const _CET_ = originDate.setZone('CET');
+    const hourDifference = offsetDate.offset - originDate.offset;
+    const response = {
+        originDateTime: originDate.toFormat("yyyy/MM/dd, HH:mm:ss"),
+        originTimeZone,
+        offsetDateTime: offsetDate.toFormat("yyyy/MM/dd, HH:mm:ss"),
+        offsetTimeZone,
+        CETDateTime: _CET_.toFormat("yyyy/MM/dd, HH:mm:ss"),
+        hourDifference: hourDifference / 60
+    };
+    return response
+};
 
 // * Developer @00ricardo
 // ? Created 14/01/23

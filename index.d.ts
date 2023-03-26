@@ -14,7 +14,7 @@ declare module '00ricardo-utils' {
         groupBy(array: Array<Object>, groupByProperty: String): Object;
         aggregateData(array: Array<Object>, _key: String, propToAggregate: String): Object;
         validateEmail(email: String): Boolean;
-        convertTimezone(fromTimeZone: String, toTimeZone: String, customDate: Object): Object;
+        convertTimezone(originTimeZone: String, offsetTimeZone: String, dateTime: String): Object;
     }
     const utils: Utils;
     export default utils;
