@@ -1,5 +1,5 @@
 //Dependencies
-import { DateTime } from 'luxon'
+
 
 // * Method 
 // ! Returns Boolean
@@ -225,22 +225,33 @@ const validateEmail = (email) => {
 // * Method 
 // ! Returns Object
 // ? Function that calculates the Time Zones (TZ) and their date times
-const convertTimezone = (originTimeZone, offsetTimeZone, dateTime) => {
-    const originDate = DateTime.fromISO(dateTime, { zone: originTimeZone });
+import { DateTime } from 'luxon'
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const convertTimezone = (originTimeZone, offsetTimeZone, dateTimeString) => {
+    const originDate = DateTime.fromISO(dateTimeString, { zone: originTimeZone });
     const offsetDate = originDate.setZone(offsetTimeZone);
     const _CET_ = originDate.setZone('CET');
     const hourDifference = offsetDate.offset - originDate.offset;
-    const response = {
-        originDateTime: originDate.toFormat("yyyy/MM/dd, HH:mm:ss"),
-        originTimeZone,
-        offsetDateTime: offsetDate.toFormat("yyyy/MM/dd, HH:mm:ss"),
-        offsetTimeZone,
-        CETDateTime: _CET_.toFormat("yyyy/MM/dd, HH:mm:ss"),
-        hourDifference: hourDifference / 60
-    };
-    return response
-};
 
+    const response = {
+        originDateTime: originDate.toFormat('yyyy/MM/dd, HH:mm:ss'),
+        originTimeZone,
+        offsetDateTime: offsetDate.toFormat('yyyy/MM/dd, HH:mm:ss'),
+        offsetTimeZone,
+        CETDateTime: _CET_.toFormat('yyyy/MM/dd, HH:mm:ss'),
+        hourDifference: hourDifference / 60,
+    };
+    return response;
+};
+/*
+convertTimezone('Europe/Lisbon', 'CET', '2023-04-12T15:00');
+convertTimezone('Asia/Tokyo', 'CET', '2023-04-12T03:00');
+convertTimezone('America/Bahia', 'CET', '2023-04-12T15:00');
+*/
 // * Developer @00ricardo
 // ? Created 14/01/23
 // ! Portugal 

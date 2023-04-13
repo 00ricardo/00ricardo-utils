@@ -1,6 +1,6 @@
 {
   "name": "00ricardo-utils",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Ricardo Briceño personal JavaScript Util Functions.",
   "main": "dist/00ricardo-utils.min.js",
   "type": "module",
@@ -28,6 +28,7 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
+    "dayjs": "^1.11.7",
     "luxon": "^3.3.0"
   }
 }
