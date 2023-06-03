@@ -3,7 +3,7 @@
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
-This is a lightweight low dependency package dependency for development purposes. 
+This is a lightweight low dependency package for development and optimization purposes. 
 It has several utility fuctions for:
 - Array Management
 - Object Management
@@ -11,10 +11,8 @@ It has several utility fuctions for:
 
 ## Installation
 
-00ricardo-utils doesn't requires any specific version of  [NodeJS]: <http://nodejs.org> to run because it hasn't dependency modules.
-
 ```sh
-npm i 00ricardo-utils --save-dev 
+npm i 00ricardo-utils
 ```
 ## Array Management Functions
 | Functions | Description | Parameters | Return |

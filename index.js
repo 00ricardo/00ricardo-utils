@@ -196,9 +196,25 @@ const groupBy = (array, groupByProperty) => {
     }, {})
 };
 
-// * Method 
-// ! Returns Object
-// ? Function that aggregates an array of objects by a property
+
+/**
+ * Function that aggregates an array of objects by a property
+ *
+ * @Method
+ * @param {string} array - Array of Objects
+ * @param {string} _key - Property to be used as Key
+ * @param {string} propToAggregate - Property to aggregate
+ * @returns {Object} Aggregated Data
+ * @Example
+ * - aggregateData([
+    { name: 'Alice', category: 'A', value: '10' },
+    { name: 'Bob', category: 'B', value: '20' },
+    { name: 'Charlie', category: 'A', value: '30' },
+    { name: 'Dave', category: 'B', value: '40' }], 
+    category', 
+    'value')
+ * - { A: 40, B: 60 }
+ */
 function aggregateData(array, _key, propToAggregate) {
     return array.reduce((result, item) => {
         const key = item[_key];
@@ -213,18 +229,41 @@ function aggregateData(array, _key, propToAggregate) {
         return result;
     }, {});
 }
-
-// * Method 
-// ! Returns Bollean
-// ? Function that validates an email
+/**
+ * Function that validates an email
+ *
+ * @Method
+ * @param {string} email - Email
+ * @returns {Boolean} Validate Email
+ * @Example
+ * - validateEmail("00ricardo-utils@package.com")
+ * -  True
+ */
 const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 };
 
-// * Method 
-// ! Returns Object
-// ? Function that calculates the Time Zones (TZ) and their date times
+/**
+ * Function that calculates the Time Zones (TZ) and their date times
+ *
+ * @Method
+ * @param {string} originTimeZone - originTimeZone
+ * @param {string} offsetTimeZone - originTimeZone
+ * @param {string} dateTime - originTimeZone
+ * @returns {Object} {originDateTime, originTimeZone, offsetDateTime, offsetTimeZone, CETDateTime, hourDifference}
+ * @Example
+ * - convertTimezone('UTC', 'America/Los_Angeles', '2023-04-18T15:30');
+ * -  {
+    originDateTime: '2023/04/18, 15:30:00',
+    originTimeZone: 'UTC',
+    offsetDateTime: '2023/04/18, 08:30:00',
+    offsetTimeZone: 'America/Los_Angeles',
+    CETDateTime: '2023/04/18, 17:30:00',
+    hourDifference: -7
+}
+@Consideration Use Intl.supportedValuesOf('timeZone') to get the list of supported timezones
+ */
 const convertTimezone = (originTimeZone, offsetTimeZone, dateTime) => {
     const originDate = DateTime.fromISO(dateTime, { zone: originTimeZone });
     const offsetDate = originDate.setZone(offsetTimeZone);
