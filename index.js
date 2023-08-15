@@ -300,3 +300,21 @@ export default {
     validateEmail: validateEmail,
     convertTimezone: convertTimezone
 };
+
+/*module.exports = {
+    hasValue: hasValue,
+    removeElement: removeElement,
+    removeProperty: removeProperty,
+    hasProperty: hasProperty,
+    readFileInfo: readFileInfo,
+    removeEmptyElements: removeEmptyElements,
+    joinMapping: joinMapping,
+    getWords: getWords,
+    searchFiltering: searchFiltering,
+    getUniqueValues: getUniqueValues,
+    renameProperty: renameProperty,
+    groupBy: groupBy,
+    aggregateData: aggregateData,
+    validateEmail: validateEmail,
+    convertTimezone: convertTimezone
+}*/
