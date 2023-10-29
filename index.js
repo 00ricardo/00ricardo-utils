@@ -1,6 +1,3 @@
-//Dependencies
-
-
 // * Method 
 // ! Returns Boolean
 // ? Function that receives a value and checks its 
@@ -244,15 +241,32 @@ const validateEmail = (email) => {
     return regex.test(email);
 };
 
-// * Method 
-// ! Returns Object
-// ? Function that calculates the Time Zones (TZ) and their date times
+
 import { DateTime } from 'luxon'
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
+/**
+ * Function that calculates the Time Zones (TZ) and their date times
+ *
+ * @Method
+ * @param {string} originTimeZone
+ * @param {string} offsetTimeZone
+ * @param {string} dateTimeString
+ * @returns {Object} Time Zones
+ * @Example
+ * - convertTimezone('Asia/Tokyo', 'CET', '2023-04-12T03:00')
+ * - {
+  originDateTime: '2023/04/12, 03:00:00',
+  originTimeZone: 'Asia/Tokyo',
+  offsetDateTime: '2023/04/12, 11:00:00',
+  offsetTimeZone: 'CET',
+  CETDateTime: '2023/04/12, 11:00:00',
+  hourDifference: 8
+}
+ */
 const convertTimezone = (originTimeZone, offsetTimeZone, dateTimeString) => {
     const originDate = DateTime.fromISO(dateTimeString, { zone: originTimeZone });
     const offsetDate = originDate.setZone(offsetTimeZone);
@@ -270,32 +284,133 @@ const convertTimezone = (originTimeZone, offsetTimeZone, dateTimeString) => {
     return response;
 };
 /*
-convertTimezone('Europe/Lisbon', 'CET', '2023-04-12T15:00');
-convertTimezone('Asia/Tokyo', 'CET', '2023-04-12T03:00');
-convertTimezone('America/Bahia', 'CET', '2023-04-12T15:00');
+convertTimezone('Europe/Lisbon', 'CET', '2023-04-12T15:00') // ;
+convertTimezone('Asia/Tokyo', 'CET', '2023-04-12T03:00') //;
+convertTimezone('America/Bahia', 'CET', '2023-04-12T15:00') //;
 */
+
+/**
+ * Function that sorts an array ascending or descending
+ *
+ * @Method
+ * @param {string} array
+ * @param {string} direction (default 'ASC')
+ * @returns {Array} Sorted Array
+ * @Example
+ * - sortArray([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5], 'DESC');
+ * - [9, 6, 5, 5, 5, 4, 3, 3, 2, 1, 1]
+ */
+
+const sortArray = (array, direction = 'ASC') => {
+    if (direction === 'ASC') {
+        return array.sort((a, b) => a - b);
+    } else if (direction === 'DESC') {
+        return array.sort((a, b) => b - a);
+    } else {
+        throw new Error('Invalid sorting direction. Use "ASC" or "DESC".');
+    }
+};
+
+/**
+ * Function that sorts an array ascending or descending
+ *
+ * @Method
+ * @param {string} array
+ * @param {string} property
+ * @returns {Array} Sorted Objects Array
+ * @Example
+ * - sortObjectsArrayByProperty([{ name: 'Alice', age: 30 }, { name: 'Bob', age: 25 }, { name: 'Charlie', age: 35 }], 'age');
+ * - [{ name: 'Bob', age: 25 }, { name: 'Alice', age: 30 }, { name: 'Charlie', age: 35 }]
+ */
+const sortObjectsArrayByProperty = (array, property) => {
+    return array.sort((a, b) => {
+        if (a[property] < b[property]) {
+            return -1;
+        }
+        if (a[property] > b[property]) {
+            return 1;
+        }
+        return 0;
+    });
+};
+
+const setLocalStorageItem = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+};
+
+const getLocalStorageItem = (key, defaultValue = null) => {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : defaultValue;
+};
+
+const watchLocalStorageKey = (key, callback) => {
+    const localStorageChangeListener = (e) => {
+        if (e.key === key) {
+            callback();
+        }
+    };
+    document.addEventListener('storage', localStorageChangeListener);
+};
+
+
+import { useState } from 'react';
+/**
+ * Function that debounces a function to optimize rendering
+ *
+ * @Method
+ * @param {Function} debouncedFn
+ * @param {Number} delay
+ * @returns {} Debounce a function to execute
+ * @Example
+ * - const debouncedFunction = useDebounce((value) => {
+    console.log(`Debounced input: ${value}`);
+    setInputValue(event.target.value);
+  }, 300); // 300 milliseconds delay debouncedFn
+
+ * - function handleInputChange(event) {
+    debouncedFunction(event.target.value);
+  }
+* -  onChange={handleInputChange}
+ */
+function useDebounce(debouncedFn, delay) {
+    const [debouncedCallback, setDebouncedCallback] = useState(null);
+
+    // Update the debounced callback whenever the delay changes
+    if (debouncedCallback === null || debouncedCallback === undefined || delay !== debouncedCallback.delay) {
+        setDebouncedCallback({
+            debouncedFn,
+            delay,
+            timeout: null,
+        });
+    }
+
+    return (...args) => {
+        const { debouncedFn, delay, timeout } = debouncedCallback;
+
+        // Clear the previous timeout
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+
+        // Set a new timeout
+        const newTimeout = setTimeout(() => {
+            debouncedFn(...args);
+        }, delay);
+
+        // Update the timeout in the debounced callback
+        setDebouncedCallback({
+            ...debouncedCallback,
+            timeout: newTimeout,
+        });
+    };
+}
+
+
 // * Developer @00ricardo
 // ? Created 14/01/23
 // ! Portugal 
-export default {
-    hasValue: hasValue,
-    removeElement: removeElement,
-    removeProperty: removeProperty,
-    hasProperty: hasProperty,
-    readFileInfo: readFileInfo,
-    removeEmptyElements: removeEmptyElements,
-    joinMapping: joinMapping,
-    getWords: getWords,
-    searchFiltering: searchFiltering,
-    getUniqueValues: getUniqueValues,
-    renameProperty: renameProperty,
-    groupBy: groupBy,
-    aggregateData: aggregateData,
-    validateEmail: validateEmail,
-    convertTimezone: convertTimezone
-};
 
-/*module.exports = {
+const rutils = {
     hasValue: hasValue,
     removeElement: removeElement,
     removeProperty: removeProperty,
@@ -310,5 +425,13 @@ export default {
     groupBy: groupBy,
     aggregateData: aggregateData,
     validateEmail: validateEmail,
-    convertTimezone: convertTimezone
-}*/
+    convertTimezone: convertTimezone,
+    sortArray: sortArray,
+    sortObjectsArrayByProperty: sortObjectsArrayByProperty,
+    getLocalStorageItem, getLocalStorageItem,
+    setLocalStorageItem: setLocalStorageItem,
+    watchLocalStorageKey: watchLocalStorageKey,
+    useDebounce: useDebounce
+}
+
+export default rutils
