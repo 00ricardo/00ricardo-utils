@@ -1,3 +1,11 @@
+import { useState } from 'react';
+import { DateTime } from 'luxon'
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 // * Method 
 // ! Returns Boolean
 // ? Function that receives a value and checks its 
@@ -242,12 +250,7 @@ const validateEmail = (email) => {
 };
 
 
-import { DateTime } from 'luxon'
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
-import timezone from 'dayjs/plugin/timezone.js';
-dayjs.extend(utc);
-dayjs.extend(timezone);
+
 /**
  * Function that calculates the Time Zones (TZ) and their date times
  *
@@ -353,9 +356,9 @@ const watchLocalStorageKey = (key, callback) => {
 };
 
 
-import { useState } from 'react';
+
 /**
- * Function that debounces a function to optimize rendering
+ * Custom Hook that debounces a function to optimize rendering
  *
  * @Method
  * @param {Function} debouncedFn
@@ -372,7 +375,7 @@ import { useState } from 'react';
   }
 * -  onChange={handleInputChange}
  */
-function useDebounce(debouncedFn, delay) {
+const useDebounce = (debouncedFn, delay) => {
     const [debouncedCallback, setDebouncedCallback] = useState(null);
 
     // Update the debounced callback whenever the delay changes
@@ -405,6 +408,43 @@ function useDebounce(debouncedFn, delay) {
     };
 }
 
+/**
+ * Custom Hook that manages Local Application Storage
+ *
+ * @Method
+ * @param {String} key
+ * @param {Any} value
+ * @returns [storedValue, setValue] getter and setter
+ * @Example
+ * const [name, setName] = useLocalStorage("utils", "00ricardo")
+ */
+const useLocalStorage = (key, value) => {
+    const [storedValue, setStoredValue] = useState(()=> {
+        if(typeof window === 'undefined'){
+            return value
+        }
+        try {
+            const item = localStorage.getItem(key)
+            return item ? JSON.parse(item) : value
+        } catch (error) {
+            console.error(error)
+            return value
+        }
+    })
+    const setValue = (val) => {
+        try {
+            setStoredValue(val)
+            if(typeof window !== 'undefined'){
+                localStorage.setItem(key, JSON.stringify(val))
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    return [storedValue, setValue]
+}
+
+
 
 // * Developer @00ricardo
 // ? Created 14/01/23
@@ -431,7 +471,8 @@ const rutils = {
     getLocalStorageItem, getLocalStorageItem,
     setLocalStorageItem: setLocalStorageItem,
     watchLocalStorageKey: watchLocalStorageKey,
-    useDebounce: useDebounce
+    useDebounce: useDebounce,
+    useLocalStorage: useLocalStorage
 }
 
 export default rutils
