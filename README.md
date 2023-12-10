@@ -39,6 +39,12 @@ npm i 00ricardo-utils
 | hasProperty | Function that checks if an object has a specific property. | Object, Property (String) | Boolean |
 | validateEmail |Function that validates an email | String | String |
 
+## React Custom Hooks
+| Functions | Description | Parameters | Return |
+| ------ | ------ | ------ | ------ |
+| useDebounce | - | - | - |
+| useLocalStorage | - | - | - |
+
 ## Other Functions
 | Functions | Description | Parameters | Return |
 | ------ | ------ | ------ | ------ |
