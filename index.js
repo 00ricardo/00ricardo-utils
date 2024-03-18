@@ -151,9 +151,12 @@ const searchFiltering = (array, query, filters) => {
         try {
           result = [
             ...result,
-            ...array.filter((e) =>
-              e[propFilter].toLowerCase().includes(w.toLowerCase())
-            ),
+            ...array.filter((e) => {
+              if (hasValue(e[propFilter])) {
+                const value = e[propFilter].toString();
+                return value.toLowerCase().includes(w.toLowerCase());
+              }
+            }),
           ];
         } catch (error) {
           console.warn(
