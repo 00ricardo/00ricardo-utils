@@ -15,6 +15,8 @@ declare module '00ricardo-utils' {
         aggregateData(array: Array<Object>, _key: String, propToAggregate: String): Object;
         validateEmail(email: String): Boolean;
         convertTimezone(originTimeZone: String, offsetTimeZone: String, dateTime: String): Object;
+        useDebounce(debouncedFn: Function, delay:Number): Object
+        useLocalStorage(key:String, value:Any): Array<any>
     }
     const utils: Utils;
     export default utils;
