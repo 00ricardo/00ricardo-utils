@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { DateTime } from "luxon";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc.js";
-import timezone from "dayjs/plugin/timezone.js";
+import { useState } from 'react';
+import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -11,17 +12,17 @@ dayjs.extend(timezone);
 // ? Function that receives a value and checks its
 // ? type, and returns a boolean indicating whether
 // ? it has a value.
-const hasValue = (parameter) => {
+export const hasValue = (parameter) => {
   if (parameter === undefined || parameter === null) {
     return false;
-  } else if (typeof parameter === "object") {
+  } else if (typeof parameter === 'object') {
     if (Array.isArray(parameter)) {
       return parameter.length > 0;
     } else {
       return Object.keys(parameter).length > 0;
     }
   } else {
-    return parameter !== "";
+    return parameter !== '';
   }
 };
 
@@ -29,7 +30,7 @@ const hasValue = (parameter) => {
 // ! Returns Array
 // ? Function that receives an array and removes an specific
 // ? element by its index and return a new array
-const removeElement = (arr, index) => {
+export const removeElement = (arr, index) => {
   arr.splice(index, 1);
   return arr;
 };
@@ -38,7 +39,7 @@ const removeElement = (arr, index) => {
 // ! Returns Object
 // ? Function that receives an object and removes an specific
 // ? property by its name and return a new Object
-const removeProperty = (obj, property) => {
+export const removeProperty = (obj, property) => {
   if (obj.hasOwnProperty(property)) {
     Object.defineProperty(obj, property, {
       configurable: true,
@@ -54,7 +55,7 @@ const removeProperty = (obj, property) => {
 // * Method
 // ! Returns Boolean
 // ? Function that checks if an object has a specific property
-const hasProperty = (obj, property) => {
+export const hasProperty = (obj, property) => {
   return obj.hasOwnProperty(property);
 };
 
@@ -62,7 +63,7 @@ const hasProperty = (obj, property) => {
 // ! Returns Object
 // ? Function that reads a file and give useful information
 // ? like the name, type, size and Base64 Encode
-const readFileInfo = (file) => {
+export const readFileInfo = (file) => {
   const reader = new FileReader();
   return new Promise((resolve, reject) => {
     reader.onload = () => {
@@ -82,14 +83,14 @@ const readFileInfo = (file) => {
 // ! Returns Array
 // ? Function that cleans an array. It removes all NULL,
 // ? undefined and empty strings from the array
-const removeEmptyElements = (arr) => {
+export const removeEmptyElements = (arr) => {
   return arr.filter(Boolean);
 };
 
 // * Method
 // ! Returns Array
 // ? Function that returns unique values from array
-const getUniqueValues = (arr) => {
+export const getUniqueValues = (arr) => {
   return [...new Set(arr)];
 };
 
@@ -111,7 +112,7 @@ const getUniqueValues = (arr) => {
 // ? FROM arr1
 // ? JOIN LEFT arr2 ON arr1.arr1Prop = arr2.arr2Prop
 
-const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, arr2PropValue) => {
+export const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, arr2PropValue) => {
   console.log();
   return arr1.map((p) => {
     const map = arr2.find((_p) => _p[arr2Prop] === p[arr1Prop]);
@@ -126,11 +127,11 @@ const joinMapping = (arr1, arr1Prop, arr2, arr2Prop, arr2PropValue) => {
 // * Method
 // ! Returns Array
 // ? Function that returns all words from a String.
-const getWords = (str) => {
+export const getWords = (str) => {
   const words = str.split(/\s+/);
 
   for (let i = 0; i < words.length; i++) {
-    words[i] = words[i].replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, "");
+    words[i] = words[i].replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '');
   }
 
   return removeEmptyElements(words);
@@ -140,7 +141,7 @@ const getWords = (str) => {
 // ! Returns Array
 // ? Function that returns all instances from an Array based on filtering properties
 // ! For Simple Arrays (Strings, Numbers) no filter should be used.
-const searchFiltering = (array, query, filters) => {
+export const searchFiltering = (array, query, filters) => {
   const words = getWords(query);
 
   var result = [];
@@ -163,9 +164,9 @@ const searchFiltering = (array, query, filters) => {
             "[00ricardo-utils] - This operation is not possible. Probably you're filtering based on a wrong Filter."
           );
           console.warn(
-            "[00ricardo-utils] - Please check the right properties."
+            '[00ricardo-utils] - Please check the right properties.'
           );
-          console.warn("[00ricardo-utils] - Error: ", error);
+          console.warn('[00ricardo-utils] - Error: ', error);
         }
       });
     });
@@ -181,7 +182,7 @@ const searchFiltering = (array, query, filters) => {
       console.warn(
         "[00ricardo-utils] - This operation is not possible. Probably you're filtering an array of Objects and you must specify the filtering property."
       );
-      console.warn("[00ricardo-utils] - Example: Title");
+      console.warn('[00ricardo-utils] - Example: Title');
     }
   }
   return result;
@@ -190,7 +191,7 @@ const searchFiltering = (array, query, filters) => {
 // * Method
 // ! Returns Object
 // ? Function that renames a Object Property
-const renameProperty = (obj, oldProp, newProp) => {
+export const renameProperty = (obj, oldProp, newProp) => {
   const { [oldProp]: _, ...rest } = obj;
   return {
     ...rest,
@@ -201,7 +202,7 @@ const renameProperty = (obj, oldProp, newProp) => {
 // * Method
 // ! Returns Object
 // ? Function that groups an array of objects by a property
-const groupBy = (array, groupByProperty) => {
+export const groupBy = (array, groupByProperty) => {
   array.reduce((result, element) => {
     const key = element[groupByProperty];
     if (!result[key]) {
@@ -230,7 +231,7 @@ const groupBy = (array, groupByProperty) => {
     'value')
  * - { A: 40, B: 60 }
  */
-function aggregateData(array, _key, propToAggregate) {
+export const aggregateData = (array, _key, propToAggregate) => {
   return array.reduce((result, item) => {
     const key = item[_key];
     const propValue = Number(item[propToAggregate]); // convert to number
@@ -243,7 +244,7 @@ function aggregateData(array, _key, propToAggregate) {
     result[key] += propValue;
     return result;
   }, {});
-}
+};
 /**
  * Function that validates an email
  *
@@ -254,7 +255,7 @@ function aggregateData(array, _key, propToAggregate) {
  * - validateEmail("00ricardo-utils@package.com")
  * -  True
  */
-const validateEmail = (email) => {
+export const validateEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 };
@@ -278,18 +279,22 @@ const validateEmail = (email) => {
   hourDifference: 8
 }
  */
-const convertTimezone = (originTimeZone, offsetTimeZone, dateTimeString) => {
+export const convertTimezone = (
+  originTimeZone,
+  offsetTimeZone,
+  dateTimeString
+) => {
   const originDate = DateTime.fromISO(dateTimeString, { zone: originTimeZone });
   const offsetDate = originDate.setZone(offsetTimeZone);
-  const _CET_ = originDate.setZone("CET");
+  const _CET_ = originDate.setZone('CET');
   const hourDifference = offsetDate.offset - originDate.offset;
 
   const response = {
-    originDateTime: originDate.toFormat("yyyy/MM/dd, HH:mm:ss"),
+    originDateTime: originDate.toFormat('yyyy/MM/dd, HH:mm:ss'),
     originTimeZone,
-    offsetDateTime: offsetDate.toFormat("yyyy/MM/dd, HH:mm:ss"),
+    offsetDateTime: offsetDate.toFormat('yyyy/MM/dd, HH:mm:ss'),
     offsetTimeZone,
-    CETDateTime: _CET_.toFormat("yyyy/MM/dd, HH:mm:ss"),
+    CETDateTime: _CET_.toFormat('yyyy/MM/dd, HH:mm:ss'),
     hourDifference: hourDifference / 60,
   };
   return response;
@@ -312,10 +317,10 @@ convertTimezone('America/Bahia', 'CET', '2023-04-12T15:00') //;
  * - [9, 6, 5, 5, 5, 4, 3, 3, 2, 1, 1]
  */
 
-const sortArray = (array, direction = "ASC") => {
-  if (direction === "ASC") {
+export const sortArray = (array, direction = 'ASC') => {
+  if (direction === 'ASC') {
     return array.sort((a, b) => a - b);
-  } else if (direction === "DESC") {
+  } else if (direction === 'DESC') {
     return array.sort((a, b) => b - a);
   } else {
     throw new Error('Invalid sorting direction. Use "ASC" or "DESC".');
@@ -333,7 +338,7 @@ const sortArray = (array, direction = "ASC") => {
  * - sortObjectsArrayByProperty([{ name: 'Alice', age: 30 }, { name: 'Bob', age: 25 }, { name: 'Charlie', age: 35 }], 'age');
  * - [{ name: 'Bob', age: 25 }, { name: 'Alice', age: 30 }, { name: 'Charlie', age: 35 }]
  */
-const sortObjectsArrayByProperty = (array, property) => {
+export const sortObjectsArrayByProperty = (array, property) => {
   return array.sort((a, b) => {
     if (a[property] < b[property]) {
       return -1;
@@ -345,22 +350,22 @@ const sortObjectsArrayByProperty = (array, property) => {
   });
 };
 
-const setLocalStorageItem = (key, value) => {
+export const setLocalStorageItem = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-const getLocalStorageItem = (key, defaultValue = null) => {
+export const getLocalStorageItem = (key, defaultValue = null) => {
   const storedValue = localStorage.getItem(key);
   return storedValue ? JSON.parse(storedValue) : defaultValue;
 };
 
-const watchLocalStorageKey = (key, callback) => {
+export const watchLocalStorageKey = (key, callback) => {
   const localStorageChangeListener = (e) => {
     if (e.key === key) {
       callback();
     }
   };
-  document.addEventListener("storage", localStorageChangeListener);
+  document.addEventListener('storage', localStorageChangeListener);
 };
 
 /**
@@ -381,7 +386,7 @@ const watchLocalStorageKey = (key, callback) => {
   }
 * -  onChange={handleInputChange}
  */
-const useDebounce = (debouncedFn, delay) => {
+export const useDebounce = (debouncedFn, delay) => {
   const [debouncedCallback, setDebouncedCallback] = useState(null);
 
   // Update the debounced callback whenever the delay changes
@@ -419,39 +424,137 @@ const useDebounce = (debouncedFn, delay) => {
 };
 
 /**
- * Custom Hook that manages Local Application Storage
+ * Custom hook to manage data fetching and mutations with TanStack Query.
  *
- * @Method
- * @param {String} key
- * @param {Any} value
- * @returns [storedValue, setValue] getter and setter
- * @Example
- * const [name, setName] = useLocalStorage("utils", "00ricardo")
+ * @param {Array} queryKey - The unique key for the query.
+ * @param {Function} fetchFunction - Function to fetch data (required for queries).
+ * @param {Function} [mutationFunction=null] - Function to mutate data (optional for queries, required for mutations).
+ * @param {Object} [options={}] - Configuration options for the query and mutation behavior.
+ * @param {boolean} [options.enabled=true] - Determines if the query should run automatically.
+ * @param {number} [options.staleTime=0] - Time (in milliseconds) the data is considered fresh before becoming stale.
+ * @param {number} [options.cacheTime=0] - Time (in milliseconds) the data remains in cache after becoming unused.
+ * @param {number} [options.refetchInterval=null] - Time (in milliseconds) for automatic refetching. Set to `null` to disable.
+ * @param {Object} [options.mutationOptions={}] - Options specifically for mutation behavior.
+ * @param {Function} [options.mutationOptions.onMutate] - Callback invoked before the mutation function is fired.
+ * @param {Function} [options.mutationOptions.onSuccess] - Callback invoked if the mutation is successful.
+ * @param {Function} [options.mutationOptions.onError] - Callback invoked if the mutation fails.
+ * @param {Function} [options.mutationOptions.onSettled] - Callback invoked when the mutation completes, regardless of success or failure.
+ *
+ * @example <caption>Basic Query Example</caption>
+ * const { data: queueListenerData, error: queueListenerError } = useRestAPI({
+ *   queryKey: ['message-listener', msgID],
+ *   fetchFunction: () => queueListener(baseURL, msgID),
+ *   options: {
+ *     enabled: rutils.hasValue(baseURL) && rutils.hasValue(msgID) && !processQueueHasResult,
+ *     staleTime: 0,
+ *     cacheTime: 0,
+ *     refetchInterval: 3000, // Auto refetch every 3 seconds
+ *   }
+ * });
+ *
+ * @example <caption>Basic Mutation Example</caption>
+ * const {
+ *   mutate: addChangesToProcessQueue,
+ *   mutationError: addChangesToProcessQueueError,
+ *   isLoading: isMutating,
+ *   isMutationSuccess,
+ * } = useORDS({
+ *   queryKey: ['add-changes/'],
+ *   mutationFunction: (payload) => sendRequestToProcessQueue(baseURL, payload),
+ *   options: {
+ *     enabled: rutils.hasValue(baseURL),
+ *     staleTime: 0,
+ *     cacheTime: 0,
+ *     mutationOptions: {
+ *       onSuccess: (data) => {
+ *         const { result, message_id } = data;
+ *         if (result === 'SUCCESS') setMsgID(message_id);
+ *       },
+ *     },
+ *   }
+ * });
+ *
+ * @returns {Object} - Returns query and mutation utilities, including `data`, `error`, `isLoading`, and `mutate`.
  */
-const useLocalStorage = (key, value) => {
-  const [storedValue, setStoredValue] = useState(() => {
-    if (typeof window === "undefined") {
-      return value;
-    }
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : value;
-    } catch (error) {
-      console.error(error);
-      return value;
-    }
-  });
-  const setValue = (val) => {
-    try {
-      setStoredValue(val);
-      if (typeof window !== "undefined") {
-        localStorage.setItem(key, JSON.stringify(val));
+
+const useRestAPI = ({
+  queryKey,
+  fetchFunction,
+  mutationFunction,
+  options = {},
+}) => {
+  const queryClient = useQueryClient();
+
+  // Destructure options for ease of use
+
+  const {
+    enabled = true,
+    staleTime = 0,
+    cacheTime = 1 * 60 * 1000, // ! 1 minute
+    mutationCallbacks = {},
+    queryCallbacks = {},
+    retry = 1, //!  Meaning that it will fetch data 2 times (usual call and 1 retry)
+    refetchInterval = 0, // ! Auto Refetch 0 ms by default
+  } = options;
+
+  // * Data Fetching
+  const { data, error, isLoading, isError, isSuccess, isFetching, refetch } =
+    useQuery({
+      queryKey,
+      queryFn: fetchFunction,
+      enabled,
+      staleTime,
+      cacheTime,
+      retry,
+      refetchInterval,
+      onSuccess: (data) => {
+        if (queryCallbacks.onSuccess) queryCallbacks.onSuccess(data);
+      },
+      onError: (error) => {
+        if (queryCallbacks.onError) queryCallbacks.onError(error);
+      },
+    });
+
+  // Data Mutation
+
+  const {
+    data: mutateData,
+    mutate,
+    isLoading: isMutating,
+    error: mutationError,
+    isError: isMutationError,
+    isSuccess: isMutationSuccess,
+  } = useMutation({
+    mutationFn: mutationFunction,
+    ...mutationCallbacks,
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(queryKey);
+      if (mutationCallbacks.onSuccess) {
+        mutationCallbacks.onSuccess(data, variables, context);
       }
-    } catch (error) {
-      console.error(error);
-    }
+    },
+    onError: (error, variables, context) => {
+      if (mutationCallbacks.onError) {
+        mutationCallbacks.onError(error, variables, context);
+      }
+    },
+  });
+
+  return {
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess,
+    isFetching,
+    refetch,
+    mutateData,
+    mutate,
+    isMutating,
+    mutationError,
+    isMutationError,
+    isMutationSuccess,
   };
-  return [storedValue, setValue];
 };
 
 // * Developer @00ricardo
@@ -476,12 +579,11 @@ const rutils = {
   convertTimezone: convertTimezone,
   sortArray: sortArray,
   sortObjectsArrayByProperty: sortObjectsArrayByProperty,
-  getLocalStorageItem,
-  getLocalStorageItem,
+  getLocalStorageItem: getLocalStorageItem,
   setLocalStorageItem: setLocalStorageItem,
   watchLocalStorageKey: watchLocalStorageKey,
   useDebounce: useDebounce,
-  useLocalStorage: useLocalStorage,
+  useRestAPI: useRestAPI,
 };
 
 export default rutils;
